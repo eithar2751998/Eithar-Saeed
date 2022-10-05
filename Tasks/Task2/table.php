@@ -70,12 +70,11 @@
         <table class="table table-success table-striped">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Gender</th>
-                <th>Hobbies</th>
-                <th>Activities</th>
-<!--                <th>Phones</th>-->
+                <?php
+                foreach ($users[0] as $key=>$value){
+                    echo "<th>".$key."</th>";
+                }
+                ?>
             </tr>
             </thead>
             <tbody>
