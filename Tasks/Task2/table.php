@@ -72,7 +72,7 @@
             <tr>
                 <?php
                 foreach ($users[0] as $key=>$value){
-                    echo "<th>".$key."</th>";
+                    echo "<th class='text-uppercase text-center'>".$key."</th>";
                 }
                 ?>
             </tr>
@@ -81,31 +81,27 @@
             <?php
 
             for ($i = 0; $i < count($users); $i++){
-                echo "<tr>
-                        <td scope='row'>{$users[$i]->id}</td>
-                        <td>{$users[$i]->name}</td>
-                        <td>";
-                        if ($users[$i]->gender->gender === 'm')
-                            echo "Male";
-                        else
-                            echo "Female";
-                        echo "</td>";
-
-                       echo "<td>";
-                       foreach ($users[$i]->hobbies as $hobby){
-                           echo "{$hobby}<br>" ;
-                       }
-                       echo "</td>
-                        <td>";
-                        foreach ($users[$i]->activities as $activity){
-                            echo "{$activity}<br>";
+                echo "<tr>";
+                foreach ($users[$i] as $property => $value ){
+                    echo "<td class='text-capitalize text-center'>";
+                    if(gettype($value) == 'object' || gettype($value) == 'array'){
+                        foreach ($value as $keyOrProperty => $val){
+                            if($property === 'gender' && $keyOrProperty === 'gender'){
+                                $val = $val == 'm' ? 'male' : 'female';
+                            }
+                            echo ($val). "<br>"  ;
                         }
-                       echo "</td> ";
-//                        echo "<td>{$users[$i]->phones}</td> ";
-                    echo"</tr> ";
+                    }
+                    else {
+                            echo $value ;
+                    }
+
+                    echo "</td>";
+                }
+
+                echo"</tr> ";
 
             }
-//            print_r (count($users));
             ?>
             </tbody>
         </table>
