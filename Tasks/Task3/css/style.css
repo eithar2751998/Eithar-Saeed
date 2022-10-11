@@ -1,0 +1,15 @@
+
+
+body {
+    text-align: center;
+}
+
+footer {
+    background: yellow;
+    height: 100px;
+}
+
+
+.hidden {
+    display: none;
+}
