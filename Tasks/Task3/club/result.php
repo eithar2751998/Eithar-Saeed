@@ -26,7 +26,7 @@ function addMoneyToClubs(string $gameName) {
     global $clubs ;
     $clubs[$gameName] += price($gameName);
 }
-//session_destroy();
+
 $total = 0;
 ?>
 <!doctype html>
@@ -108,8 +108,10 @@ $total = 0;
                 </tr>
                 </tbody>
             </table>
-    </div>
+        </div>
         <?php include "../includes/footer.php"?>
+
+        <?= session_destroy(); ?>
 
         <script src="../js/bootstrap.bundle.min.js"></script>
     </body>
