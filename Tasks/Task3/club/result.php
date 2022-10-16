@@ -9,9 +9,9 @@ define ('CLUB_SUBSCRIPTION', 10000);
 define('MEMBER_SUBSCRIPTION',2500);
 
 
-function GamePrice(string $gameName) :float{
+function price(string $gameName) :float{
     $games = [
-        'football'=>300,'swimming'=>250,'volleyball'=>150,'others'=>100
+        'football'=>300,'swimming'=>250,'volleyball'=>150,'other'=>100
     ];
     return $games[$gameName] ?? 0;
 }
@@ -19,15 +19,15 @@ $clubs = [
     'football' => 0,
     'swimming' => 0,
     'volleyball' => 0,
-    'others' => 0,
+    'other' => 0,
 ];
 
 function addMoneyToClubs(string $gameName) {
     global $clubs ;
-    $clubs[$gameName] += GamePrice($gameName);
+    $clubs[$gameName] += price($gameName);
 }
 //session_destroy();
-
+$total = 0;
 ?>
 <!doctype html>
 <html lang="en">
@@ -55,36 +55,36 @@ function addMoneyToClubs(string $gameName) {
             </thead>
             <tbody>
                 <?php
-                $totalGames = 0;
 
-                foreach($_POST['members'] AS $index => $member){ ?>
+
+                foreach($_POST['members']  as  $member){ ?>
                     <tr>
                         <td><?= $member['name'] ?></td>
                         <?php
                         $subTotal = 0;
                         if(isset($member['games'])){
-                            $countOfGamesForEachMember = count($member['games']); //3
+                            $count = count($member['games']); //3
                             foreach($member['games'] AS $game){
                                 echo "<td>{$game}</td>";
-                                $subTotal+= GamePrice($game);
+                                $subTotal+= price($game);
                                 addMoneyToClubs($game);
                             }
-                            for($counter = 1; $counter <= 4-$countOfGamesForEachMember;$counter++){
+                            for($i = 1; $i <= 4-$count;$i++){
                                 echo "<td></td>";
                             }
                         }else{
                             echo "<td colspan=4></td>";
                         }
-                        $totalGames += $subTotal;
+                        $total += $subTotal;
                         ?>
                         <td class="text-right"><?= $subTotal ?></td>
                     </tr>
                 <?php }
-                $totalPrice = $totalGames + (MEMBER_SUBSCRIPTION * count($_POST['members'])) + CLUB_SUBSCRIPTION;
+                $totalPrice = $total + (MEMBER_SUBSCRIPTION * count($_POST['members'])) + CLUB_SUBSCRIPTION;
                 ?>
                 <tr>
                     <td colspan="3">Total Games</td>
-                    <td class="text-right" colspan="3"><?= $totalGames ?> EGP</td>
+                    <td class="text-right" colspan="3"><?= $total ?> EGP</td>
                 </tr>
                 <tr>
                     <td colspan="3">Football Club</td>
@@ -100,7 +100,7 @@ function addMoneyToClubs(string $gameName) {
                 </tr>
                 <tr>
                     <td colspan="3">Other Club</td>
-                    <td class="text-right" colspan="3"><?= $clubs['others'] ?> EGP</td>
+                    <td class="text-right" colspan="3"><?= $clubs['other'] ?> EGP</td>
                 </tr>
                 <tr>
                     <td colspan="3" class="text-primary">Total Price</td>
